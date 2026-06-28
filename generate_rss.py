@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 EXCEL_FILE = os.path.join(BASE_DIR, "source.xlsx")
 STATE_FILE = os.path.join(BASE_DIR, "state.json")
 RSS_FILE = os.path.join(BASE_DIR, "feed.xml")
-POSTS_PER_RUN = 2
+POSTS_PER_RUN = 1
 NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
 NVIDIA_MODEL = "meta/llama-3.1-405b-instruct" # Using a strong model from NVIDIA API, fallback to openai/gpt-oss-120b if needed, but llama-3.1-405b or 70b is great. Let's use meta/llama-3.1-70b-instruct to be safe on limits, or the one from main.py: openai/gpt-oss-120b
 NVIDIA_MODEL = "openai/gpt-oss-120b"
@@ -47,6 +47,7 @@ Course Link: {link}
 Requirements:
 - Make it professional, persuasive, and highlight the career benefits of taking this certification.
 - Include the course link naturally in the post.
+- Always add a call to action near the end to download the mobile application for certification preparation using this link: https://apps.apple.com/us/app/certification-preparation/id6776616024
 - Add plenty of relevant, high-traffic hashtags at the bottom (e.g. #certifications, #learning, #career, etc.).
 - Output ONLY the final post content. Do not include any introductory remarks, conversational filler, or markdown code blocks (like ```).
 """
