@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certifications Learning Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <h1>Certifications Learning</h1>
+        <p class="subtitle">Elevate your career with top-tier certifications. Explore our daily updated resources and mock tests.</p>
+        <a href="feed.xml" class="rss-link" target="_blank">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 11a9 9 0 0 1 9 9"></path>
+                <path d="M4 4a16 16 0 0 1 16 16"></path>
+                <circle cx="5" cy="19" r="1"></circle>
+            </svg>
+            Subscribe to RSS
+        </a>
+    </header>
+
+    <main>
+        <div id="feed-container">
+            <div class="loading">Loading latest updates...</div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('feed-container');
+            
+            try {
+                const response = await fetch('feed.xml');
+                if (!response.ok) throw new Error('Failed to fetch feed');
+                
+                const text = await response.text();
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(text, "text/xml");
+                
+                const items = xmlDoc.querySelectorAll("item");
+                container.innerHTML = '';
+                
+                if (items.length === 0) {
+                    container.innerHTML = '<div class="loading">No updates found.</div>';
+                    return;
+                }
+
+                items.forEach(item => {
+                    const title = item.querySelector("title")?.textContent || "No title";
+                    const link = item.querySelector("link")?.textContent || "#";
+                    let description = item.querySelector("description")?.textContent || "";
+                    const pubDateStr = item.querySelector("pubDate")?.textContent || "";
+                    
+                    // Format date
+                    let formattedDate = "";
+                    if (pubDateStr) {
+                        const date = new Date(pubDateStr);
+                        formattedDate = date.toLocaleDateString('en-US', { 
+                            year: 'numeric', month: 'short', day: 'numeric' 
+                        });
+                    }
+
+                    // Format description (handle the BR tags and convert URLs to links)
+                    description = description.replace(/<br\s*\/?>/gi, '\n');
+                    
+                    // Simple URL to Link conversion for display
+                    const urlRegex = /(https?:\/\/[^\s]+)/g;
+                    description = description.replace(urlRegex, function(url) {
+                        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+                    });
+
+                    const article = document.createElement('article');
+                    article.className = 'post-card';
+                    article.innerHTML = `
+                        <span class="post-date">${formattedDate}</span>
+                        <h2 class="post-title"><a href="${link}" target="_blank">${title}</a></h2>
+                        <div class="post-content">${description}</div>
+                    `;
+                    container.appendChild(article);
+                });
+                
+            } catch (error) {
+                console.error("Error loading feed:", error);
+                container.innerHTML = '<div class="loading">Unable to load updates at this time.</div>';
+            }
+        });
+    </script>
+</body>
+</html>
