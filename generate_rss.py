@@ -80,11 +80,13 @@ def generate_rss_xml(history):
     </item>"""
 
     rss_template = f"""<?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>{html.escape(FEED_TITLE)}</title>
+    <atom:link href="https://cssmatter.github.io/linkedin-page-rss/feed.xml" rel="self" type="application/rss+xml" />
     <link>{html.escape(FEED_LINK)}</link>
     <description>{html.escape(FEED_DESC)}</description>
+    <language>en-us</language>
     <lastBuildDate>{formatdate(localtime=False)}</lastBuildDate>{rss_items}
   </channel>
 </rss>

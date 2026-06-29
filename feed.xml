@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Certifications Learning Platform - Daily Updates</title>
+    <atom:link href="https://cssmatter.github.io/linkedin-page-rss/feed.xml" rel="self" type="application/rss+xml" />
     <link>https://www.linkedin.com</link>
     <description>Daily SEO-friendly blog posts about top certification courses.</description>
+    <language>en-us</language>
     <lastBuildDate>Mon, 29 Jun 2026 06:25:00 -0000</lastBuildDate>
     <item>
       <title>New Course: 1500 Questions | Data Practitioner Certification 2026</title>
