@@ -68,19 +68,21 @@ def generate_rss_xml(history):
     rss_items = ""
     # Sort history to have the newest first in the RSS
     for item in reversed(history[-20:]): # keep last 20 in the feed
-        # Escape HTML entities for the CDATA or just use CDATA and replace newlines with <br>
+        # Provide plain text in description and HTML in content:encoded for better compatibility
+        desc_plain = item['description']
         desc_html = item['description'].replace('\n', '<br>\n')
         rss_items += f"""
     <item>
       <title>{html.escape(item['title'])}</title>
       <link>{html.escape(item['link'])}</link>
-      <description><![CDATA[{desc_html}]]></description>
+      <description><![CDATA[{desc_plain}]]></description>
+      <content:encoded><![CDATA[{desc_html}]]></content:encoded>
       <pubDate>{item['pubDate']}</pubDate>
       <guid isPermaLink="false">{item['guid']}</guid>
     </item>"""
 
     rss_template = f"""<?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>{html.escape(FEED_TITLE)}</title>
     <atom:link href="https://cssmatter.github.io/linkedin-page-rss/feed.xml" rel="self" type="application/rss+xml" />
