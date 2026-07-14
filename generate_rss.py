@@ -79,6 +79,7 @@ Requirements:
 - Output ONLY the final post content. Do not include any introductory remarks, conversational filler, or markdown code blocks (like ```).
 """
     try:
+        print(f"Calling NVIDIA API (Model: {NVIDIA_MODEL})...")
         response = client.chat.completions.create(
             model=NVIDIA_MODEL,
             messages=[{"role": "user", "content": prompt}],
@@ -212,9 +213,12 @@ def process_feed(config, client):
     print(f"Done! Feed saved to {config['rss_file']}\n")
 
 def main():
+    print("Initializing OpenAI client...")
     client = OpenAI(
         base_url="https://integrate.api.nvidia.com/v1",
-        api_key=NVIDIA_API_KEY
+        api_key=NVIDIA_API_KEY,
+        timeout=30.0,
+        max_retries=1
     )
     
     for config in CONFIGS:
