@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Interview Practice Tests - Daily Updates</title>
+    <atom:link href="https://cssmatter.github.io/linkedin-page-rss/feed_interview.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.linkedin.com</link>
+    <description>Daily SEO-friendly blog posts about top interview practice tests.</description>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 14 Jul 2026 08:27:47 -0000</lastBuildDate>
+  </channel>
+</rss>
